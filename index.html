@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Energy Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <h1>⚡ Smart Solar Energy Dashboard</h1>
+        <p class="subtitle">Powered by C++ HTTP Backend Server</p>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Solar Panel Output</h3>
+                <p id="solar-power" class="value">-- W</p>
+            </div>
+            <div class="card">
+                <h3>Battery Charge</h3>
+                <p id="battery-level" class="value">-- %</p>
+            </div>
+            <div class="card">
+                <h3>System Status</h3>
+                <p id="system-status" class="value">--</p>
+            </div>
+        </div>
+
+        <button onclick="fetchData()">Refresh C++ Metrics</button>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const res = await fetch('/api/data');
+                const data = await res.json();
+                document.getElementById('solar-power').innerText = data.power + ' W';
+                document.getElementById('battery-level').innerText = data.battery + ' %';
+                document.getElementById('system-status').innerText = data.status;
+            } catch (e) {
+                console.error('Error fetching data from C++ server:', e);
+            }
+        }
+        fetchData();
+    </script>
+</body>
+
+</html>
